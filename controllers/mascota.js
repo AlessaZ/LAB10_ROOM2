@@ -31,7 +31,7 @@ module.exports.MascotasController = {
                     }else{
                         for(let i=0;i < result.length;i++){
                             if(result[i].raza_otros == null){
-                                result[i].raza_otros = "Raza no especificada";
+                                result[i].raza_otros = "ninguno";
                             }
                         }
                         res.status(201).json({message : 'Mascota encontrada', result});
@@ -47,7 +47,7 @@ module.exports.MascotasController = {
                 }else{
                     for(let i=0;i < result.length;i++){
                         if(result[i].raza_otros == null){
-                            result[i].raza_otros = "Raza no especificada";
+                            result[i].raza_otros = "ninguno";
                         }
                     }
                     res.status(201).json({message : 'Lista de mascotas', result});
@@ -75,7 +75,7 @@ module.exports.MascotasController = {
                 if(err){
                     res.status(500).json({message:'Se ha producido un error', error:err});
                 }else{
-                    res.status(201).json({message : 'Mascota agregade', result});
+                    res.status(201).json({message : 'Mascota agregada', result});
                 }
             }) 
         }
