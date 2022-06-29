@@ -16,34 +16,36 @@ conn.connect(function (err){
 
 module.exports.CuentaController = {
 
-    obtenerCuentaS: (req, res) =>{
+    obtenerCuentas:(req, res) =>{
+
+        let sql = "SELECT * FROM cuenta";
+        conn.query(sql, function (err,result){
+            if(err){
+                res.status(500).json({message:'Se ha producido un error', error:err});
+            }else{
+                res.status(201).json({message : 'Lista de cuentas', result});
+            }
+        })
+    },
+
+    obtenerCuentaPorId: (req, res) =>{
+
         let idcuenta = req.params.id;
 
-        if(idcuenta){
-            let sql = "SELECT * FROM cuenta WHERE idcuenta = ?";
-            let params = [idcuenta];
-            conn.query(sql, params ,function (err,result){
-                if (err){
-                    res.status(500).json({message:'Se ha producido un error', error:err});
-                }else{
-                    if(result.length == 0){
-                        res.json({err: "No existe cuenta con ese id"});
-                    }else{
-                        res.status(201).json({message : 'Cuenta encontrada', result});
-                    }
-                }
+        let sql = "SELECT * FROM cuenta WHERE idcuenta = ?";
+        let params = [idcuenta];
 
-            })
-        }else{
-            let sql = "SELECT * FROM cuenta";
-            conn.query(sql, function (err,result){
-                if(err){
-                    res.status(500).json({message:'Se ha producido un error', error:err});
+        conn.query(sql, params ,function (err,result){
+            if (err){
+                res.status(500).json({message:'Se ha producido un error', error:err});
+            }else{
+                if(result.length == 0){
+                    res.json({err: "No existe cuenta con ese id"});
                 }else{
-                    res.status(201).json({message : 'Lista de cuentas', result});
+                    res.status(201).json({message : 'Cuenta encontrada', result});
                 }
-            })
-        }
+            }
+        })
     },
 
 }

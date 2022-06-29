@@ -9,7 +9,8 @@ const router = express.Router();
 module.exports.CuentaAPI = (app) => {
 
     router
-        .get('/get/:id?', CuentaController.obtenerCuentaS)
+        .get('/get/', CuentaController.obtenerCuentas)
+        .get('/get/:id', CuentaController.obtenerCuentaPorId)
 
     app.use('/cuenta', router)
 };
