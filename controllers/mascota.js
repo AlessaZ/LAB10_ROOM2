@@ -15,6 +15,47 @@ let conn = mysql.createConnection({
  });
 
 module.exports.MascotasController = {
+
+    obtenerMascotaS: (req, res) =>{
+        let idmascota=req.params.id;
+
+        if(idmascota){
+            let sql = "SELECT * FROM mascota WHERE idmascota = ?";
+            let params = [idmascota];
+            conn.query(sql, params ,function (err,result){
+                if (err){
+                    res.status(500).json({message:'Se ha producido un error', error:err});
+                }else{
+                    if(result.length == 0){
+                        res.json({err: "No existe mascota con ese id"});
+                    }else{
+                        for(let i=0;i < result.length;i++){
+                            if(result[i].raza_otros == null){
+                                result[i].raza_otros = "Raza no especificada";
+                            }
+                        }
+                        res.status(201).json({message : 'Mascota encontrada', result});
+                    }
+                }
+
+            })
+        }else{
+            let sql = "SELECT * FROM mascota";
+            conn.query(sql, function (err,result){
+                if(err){
+                    res.status(500).json({message:'Se ha producido un error', error:err});
+                }else{
+                    for(let i=0;i < result.length;i++){
+                        if(result[i].raza_otros == null){
+                            result[i].raza_otros = "Raza no especificada";
+                        }
+                    }
+                    res.status(201).json({message : 'Lista de mascotas', result});
+                }
+            })
+        }
+    },
+
     createMascota: (req, res) => {
         const {body} = req;
         if (!body || Object.keys(body).length===0){
@@ -40,3 +81,4 @@ module.exports.MascotasController = {
         }
     },
 }
+
