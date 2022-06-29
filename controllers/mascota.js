@@ -37,7 +37,6 @@ module.exports.MascotasController = {
                         res.status(201).json({message : 'Mascota encontrada', result});
                     }
                 }
-
             })
         }else{
             let sql = "SELECT * FROM mascota";
@@ -59,7 +58,8 @@ module.exports.MascotasController = {
     createMascota: (req, res) => {
         const {body} = req;
         if (!body || Object.keys(body).length===0){
-            Response.error(res, new createError.BadRequest());
+            const {statusCode, message} = new createError.BadRequest();
+            res.status(statusCode).json({message});
         }else{
             let nombre = req.body.nombre;
             let anho = req.body.anho;
@@ -79,6 +79,6 @@ module.exports.MascotasController = {
                 }
             }) 
         }
-    },
+    }
 }
 
