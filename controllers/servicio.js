@@ -23,14 +23,13 @@ module.exports.ServicioController = {
             res.status(statusCode).json({message});
         }else{
             let idmascota=req.params.idmascota;
-            let servicio = req.body.idservicio;
             let cuenta = req.body.cuenta_idcuenta;
             let inicio = req.body.hora_inicio;
             let dura = req.body.duracion;
-            let entre = req.body.entrega;
+            let entrega = req.body.entrega;
             let responsable = req.body.responsable_idresponsable;
-            let params = [servicio,idmascota,cuenta,inicio,dura,entre,responsable]
-            let sql = "INSERT INTO `sandylance`.`servicio` (`idservicio`, `mascota_idmascota`, `cuenta_idcuenta`, `hora_inicio`, `duracion`, `entrega`, `responsable_idresponsable`) VALUES (?,?,?, ?,?, ?, ?)";
+            let params = [idmascota,cuenta,inicio,dura,entrega,responsable]
+            let sql = "INSERT INTO `sandylance`.`servicio` (`mascota_idmascota`, `cuenta_idcuenta`, `hora_inicio`, `duracion`, `entrega`, `responsable_idresponsable`) VALUES (?,?, ?,?, ?, ?)";
             conn.query(sql,params,function (err,result){
                 if(err){
                     res.status(500).json({message:'Se ha producido un error al crear el servicio.', error:err});
